@@ -1,48 +1,10 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-#=======================================================================================================================
-#
-# MKBRUTUS.py v1.0.2 - Password bruteforcer for MikroTik devices or boxes running RouterOS
-#
-# AUTHORS:
-# Ramiro Caire   - email: ramiro.caire@gmail.com  / Twitter: @rcaire
-# Federico Massa - email: fgmassa@vanguardsec.com / Twitter: @fgmassa
-#
-# WEB SITE:
-# http://mkbrutusproject.github.io/MKBRUTUS/
-# https://github.com/mkbrutusproject/mkbrutus
-#
-# SUMMARY:
-# Some boxes running Mikrotik RouterOS (3.x or newer) have the API port enabled (by default, in the port 8728/TCP)
-# for administrative purposes instead SSH, Winbox or HTTPS (or have all of them). This is (another) attack vector as it
-# might be possible to perform a bruteforce to obtain valid credentials if no protection is available on that port.
-# As the API uses a specific privative protocol, some code published by the vendor was included.
-# Python 3.x is required in order to run this tool.
-#
-# DISCLAIMER:
-# This tool is intended only for testing Mikrotik devices security in ethical pentest or audits process.
-# The authors are not responsible for any damages you use this tool.
-#
-# MKBRUTUS is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# MKBRUTUS is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Affero Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#=======================================================================================================================
 
 #Check for Python3
 import sys
-if sys.version_info < (3, 0):
-    sys.stdout.write("Sorry, Python 3.x is required to run this tool\n")
-    sys.exit(2)
+# if sys.version_info < (3, 0):
+#     sys.stdout.write("Sorry, Python 3.x is required to run this tool\n")
+#     sys.exit(2)
 
 import binascii
 import getopt
@@ -78,7 +40,7 @@ def usage():
     \t -u, --user \t\t User name (default admin)
     \t -h, --help \t\t This help
     \t -d, --dictionary \t Password dictionary
-    \t -s, --seconds \t\t Delay seconds between retry attempts (default 1) 
+    \t -s, --seconds \t\t Delay seconds between retry attempts (default 1)
     \t -q, --quiet \t\t Quiet mode
     ''')
 
@@ -285,10 +247,10 @@ def main():
 
     # Catch KeyboardInterrupt
     signal.signal(signal.SIGINT, signal_handler)
-    
+
     # Looking for default RouterOS creds
     defcredcheck = True
-    
+
     # Get the number of lines in file
     count = 0
     dictFile = codecs.open(dictionary,'rb', encoding='utf-8', errors='ignore')
@@ -340,7 +302,7 @@ def main():
                 print("")
                 defcredcheck = False
                 time.sleep(1)
-       
+
         loginoutput = apiros.login(user, password)
         login = ''.join(loginoutput[0][0])
 
