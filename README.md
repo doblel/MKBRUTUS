@@ -3,22 +3,23 @@ MKBRUTUS
 
 Password bruteforcer for MikroTik devices and boxes running RouterOS.
 
-Project website: http://mkbrutusproject.github.io/MKBRUTUS/
+**Project Website:** http://mkbrutusproject.github.io/MKBRUTUS/
 
 ## Summary
 
-Some boxes running MikroTik RouterOS (3.x or newer) have API port enabled for administrative purposes (by default at port 8728/TCP) instead or alongside SSH, Winbox or HTTPS. This is an attack vector as it might be possible to perform a bruteforce to obtain valid credentials if access to this port is not restricted. The API uses a specific proprietary protocol so some code published by the vendor is included.
+Some boxes running MikroTik RouterOS (3.x or newer) have API port enabled for administrative purposes (by default at port 8728/TCP) instead or alongside SSH, Winbox or HTTPS. This is an attack vector as it could be possible to perform a bruteforce to obtain valid credentials if access to this port is not restricted. The API uses a specific proprietary protocol so some code published by the vendor is included.
 
 ## Disclaimer
 
-This tool is intended only for testing MikroTik devices security during ethical pentests or audit processes. The authors are not responsible for any damage caused by the use of this tool.
+This tool is intended only for testing MikroTik devices security during ethical pentests or audit processes.  
+The authors are not responsible for any damage caused by the use of this tool.
 
 
 ## Credits
 
-**Authors:**
-Ramiro Caire (@rcaire) ramiro.caire[at]gmail.com
-Federico Massa (@fgmassa) fmassa[at]vanguardsec.com
+**Authors:**  
+Ramiro Caire (@rcaire) ramiro.caire [at] gmail.com  
+Federico Massa (@fgmassa) fmassa [at] vanguardsec.com
 
 ## License
 
