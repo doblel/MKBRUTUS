@@ -124,12 +124,14 @@ def main(args):
             alert = "[-] Trying {} of {} passwords".format(
                 str(items), str(count))
             print alert + "- current" + password
+
         if login == "!done":
             alert = "[+] Login successful!!!"
             alert += "User: " + args['--user'] + " Password: " + password
             print alert
             run(items)
             return
+
         items += 1
         time.sleep(int(args['--seconds']))
 
