@@ -21,13 +21,7 @@ from docopt import docopt
 import sys
 import socket
 import time
-import signal
 import codecs
-
-
-def signal_handler(signal, frame):
-    print(" Aborted by user. Exiting... ")
-    sys.exit(2)
 
 
 def run(pwd_num):
@@ -42,9 +36,6 @@ def main(args):
 
     print("[*] Starting bruteforce attack...")
     print("-" * 33)
-
-    # Catch KeyboardInterrupt
-    signal.signal(signal.SIGINT, signal_handler)
 
     # Looking for default RouterOS creds
     defcredcheck = True
@@ -140,7 +131,10 @@ def main(args):
 
 
 if __name__ == '__main__':
-    args = docopt(__doc__, version='MKBRUTUS v1.0.2')
-    t = time.time()
-    main(args)
-    sys.exit()
+    try:
+        args = docopt(__doc__, version='v1.0.2')
+        t = time.time()
+        main(args)
+    except KeyboardInterrupt:
+        print 'Aborted by user. Exiting... '
+        sys.exit(0)
