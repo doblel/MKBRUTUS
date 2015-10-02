@@ -1,30 +1,30 @@
 # -*- cding:o utf-8 -*-
 
 """
-          _    _  _   _  _____  ____ _   _  ____ _   _ _____
-         |  \/  || | / /| ___ \ ___ \ | | |_   _| | | /  ___|
-         | .  . || |/ / | |_/ / |_/ / | | | | | | | | \ `--.
-         | |\/| ||    \ | ___ \    /| | | | | | | | | |`--. \\
-         | |  | || |\  \| |_/ / |\ \| |_| | | | | |_| /\__/ /
-         \_|  |_/\_| \_/\____/\_| \_|\___/  \_/  \___/\____/
-                      Mikrotik RouterOS Bruteforce Tool 1.0.2
-           Ramiro Caire (@rcaire) & Federico Massa (@fgmassa)
-                    http://mkbrutusproject.github.io/MKBRUTUS
+                  _    _  _   _  _____  ____ _   _  ____ _   _ _____
+                 |  \/  || | / /| ___ \ ___ \ | | |_   _| | | /  ___|
+                 | .  . || |/ / | |_/ / |_/ / | | | | | | | | \ `--.
+                 | |\/| ||    \ | ___ \    /| | | | | | | | | |`--. \\
+                 | |  | || |\  \| |_/ / |\ \| |_| | | | | |_| /\__/ /
+                 \_|  |_/\_| \_/\____/\_| \_|\___/  \_/  \___/\____/
+                              Mikrotik RouterOS Bruteforce Tool 1.0.2
+                   Ramiro Caire (@rcaire) & Federico Massa (@fgmassa)
+                            http://mkbrutusproject.github.io/MKBRUTUS
 
-Password bruteforcer for MikroTik devices or boxes running RouterOS
+ Password bruteforcer for MikroTik devices or boxes running RouterOS
 
-Usage:
-    mkbr.py [options] <TARGET> <DICT>
-    mkbr.py -h | --help
-    mkbr.py --version
+ Usage:
+     mkbr.py [options] <TARGET> <DICT>
+     mkbr.py -h | --help
+     mkbr.py --version
 
-Options:
-    -h --help,          Show this screen.
-    -v --version,       Show version.
-    -p --port=<port>    RouterOS port. [default: 8728]
-    -u --user=<user>    User name [default: admin].
-    -s --seconds=<s>    Delay seconds between retry attempts [default: 0]
-    -v --verbose        Verbose mode.
+ Options:
+     -h --help,          Show this screen.
+     --version,          Show version.
+     -p --port=<port>    RouterOS port. [default: 8728]
+     -u --user=<user>    Username [default: admin].
+     -s --seconds=<s>    Delay seconds between retry attempts [default: 0]
+     -v --verbose        Verbose mode.
 """
 
 from docopt import docopt
