@@ -111,6 +111,7 @@ def main(args):
                 my_bar.update()
             time.sleep(int(args['--seconds']))
 
+        dict_file.close()
         print ''
         print "[*] ATTACK FINISHED!"
         print("-" * 33 + "\n")
