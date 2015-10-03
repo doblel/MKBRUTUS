@@ -7,11 +7,11 @@
                  | |\/| ||    \ | ___ \    /| | | | | | | | | |`--. \\
                  | |  | || |\  \| |_/ / |\ \| |_| | | | | |_| /\__/ /
                  \_|  |_/\_| \_/\____/\_| \_|\___/  \_/  \___/\____/
-                              Mikrotik RouterOS Bruteforce Tool 1.0.2
-                   Ramiro Caire (@rcaire) & Federico Massa (@fgmassa)
-                            http://mkbrutusproject.github.io/MKBRUTUS
+                               Mikrotik RouterOS Bruteforce Tool 1.0.2
+                    Ramiro Caire (@rcaire) & Federico Massa (@fgmassa)
+                             http://mkbrutusproject.github.io/MKBRUTUS
 
- Password bruteforcer for MikroTik devices or boxes running RouterOS
+   Password bruteforcer for MikroTik devices or boxes running RouterOS
 
  Usage:
      mkbrutus.py [options] <TARGET> <DICT>
@@ -19,12 +19,12 @@
      mkbrutus.py --version
 
  Options:
-     -h --help,          Show this screen.
-     --version,          Show version.
-     -p --port=<port>    RouterOS port. [default: 8728]
-     -u --user=<user>    Username [default: admin].
-     -s --seconds=<s>    Delay seconds between retry attempts [default: 0]
-     -v --verbose        Verbose mode.
+     -h --help          Show this screen
+     --version          Show version
+     -p --port=<port>   RouterOS port [default: 8728]
+     -u --user=<user>   Username [default: admin]
+     -s --seconds=<s>   Delay in seconds between attempts [default: 0]
+     -v --verbose       Verbose mode
 """
 
 from docopt import docopt
