@@ -38,7 +38,7 @@ from routeros_api import exceptions
 
 def main(args):
 
-    print("[-] Trying with default credentials on RouterOS...")
+    print("\n[-] Trying with default credentials on RouterOS...")
     success = False
 
     try:
@@ -56,17 +56,16 @@ def main(args):
     if success:
         alert = "[+] Login successful!!!"
         alert += " Default RouterOS credentials were not changed."
-        print alert + " Log in with admin: password"
+        print alert + " Log in with admin:password\n"
     else:
         alert = "[-] Default RouterOS credentials were unsuccessful."
         print alert
-        print ""
         time.sleep(1)
 
-        print("[*] Starting bruteforce attack...")
-        print("-" * 33 + "\n")
+        msg = "[-] Starting bruteforce attack. "
+        msg += "Trying with passwords in list...\n"
+        print(msg)
 
-        print "[-] Trying with passwords in list...\n"
         dict_file = codecs.open(
             args['<DICT>'],
             'rb', encoding='utf-8',
@@ -111,14 +110,11 @@ def main(args):
                 my_bar.update()
             time.sleep(int(args['--seconds']))
 
-        print ''
-        print "[*] ATTACK FINISHED!"
-        print("-" * 33 + "\n")
-
+        res = "\n[+] ATTACK FINISHED! "
         if not success:
-            print "Try again with a different wordlist.\n"
-        print my_bar
+            res += "Try again with a different wordlist.\n"
 
+        print res
 
 if __name__ == '__main__':
     try:
