@@ -75,10 +75,10 @@ def main(args):
         psswd_count = dict_file.read().count('\n')
         dict_file.seek(0)
         items = 0
-        my_bar = pyprind.ProgPercent(
+        progress_bar = pyprind.ProgBar(
             psswd_count,
             stream=1,
-            monitor=True,
+            title='MKBRUTUS Bruteforce Attack'
         )
 
         for password in dict_file.readlines():
@@ -107,7 +107,7 @@ def main(args):
                 raise e
 
             if not args['--verbose']:
-                my_bar.update()
+                progress_bar.update()
             time.sleep(int(args['--seconds']))
 
         dict_file.close()
