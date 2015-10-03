@@ -1,0 +1,7 @@
+PyPrind==2.9.3
+RouterOS-api==0.13
+argparse==1.2.1
+docopt==0.6.2
+psutil==3.2.1
+six==1.9.0
+wsgiref==0.1.2
