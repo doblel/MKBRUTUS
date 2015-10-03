@@ -14,9 +14,9 @@
  Password bruteforcer for MikroTik devices or boxes running RouterOS
 
  Usage:
-     mkbr.py [options] <TARGET> <DICT>
-     mkbr.py -h | --help
-     mkbr.py --version
+     mkbrutus.py [options] <TARGET> <DICT>
+     mkbrutus.py -h | --help
+     mkbrutus.py --version
 
  Options:
      -h --help,          Show this screen.
