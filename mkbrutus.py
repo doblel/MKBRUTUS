@@ -110,10 +110,11 @@ def main(args):
                 my_bar.update()
             time.sleep(int(args['--seconds']))
 
+        dict_file.close()
+
         res = "\n[+] ATTACK FINISHED! "
         if not success:
             res += "Try again with a different wordlist.\n"
-
         print res
 
 if __name__ == '__main__':
