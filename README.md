@@ -18,8 +18,8 @@ The authors are not responsible for any damage caused by the use of this tool.
 ## Credits
 
 **Authors:**  
-Ramiro Caire (@rcaire) ramiro.caire [at] gmail.com  
-Federico Massa (@fgmassa) fmassa [at] vanguardsec.com
+Ramiro Caire (@rcaire) ramiro.caire@gmail.com  
+Federico Massa (@fgmassa) fmassa@vanguardsec.com
 
 ## License
 
@@ -33,4 +33,3 @@ You should have received a copy of the GNU Affero General Public License along w
 <p align="center">
 <img alt="Bitcoin" title="Donate with Bitcoin" src="http://mw.gg/i/bitcoin.png" /> 1NThgwdwUnPTYSgSSNuKTWZhu2VnJmx5k9
 </p>
-
