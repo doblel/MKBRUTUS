@@ -9,11 +9,16 @@ Password bruteforcer for MikroTik devices and boxes running RouterOS.
 
 Some boxes running MikroTik RouterOS (3.x or newer) have API port enabled for administrative purposes (by default at port 8728/TCP) instead or alongside SSH, Winbox or HTTPS. This is an attack vector as it could be possible to perform a bruteforce to obtain valid credentials if access to this port is not restricted. The API uses a specific proprietary protocol so some code published by the vendor is included.
 
+## Dependencies
+
+    sudo pip install -r requirements.txt
+
+If you don't have **pip**, find it here: [pip](http://pypi.python.org/pypi/pip)
+
 ## Disclaimer
 
 This tool is intended only for testing MikroTik devices security during ethical pentests or audit processes.  
 The authors are not responsible for any damage caused by the use of this tool.
-
 
 ## Credits
 
